@@ -8,7 +8,7 @@ var cors = require('cors');
 
 // Configuration
 mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost:27017/groceries',
+  process.env.MONGODB_URI || 'mongodb://localhost:27017/hmongames',
   { useNewUrlParser: true }
 );
 
@@ -28,59 +28,65 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Model
-var Grocery = mongoose.model('Grocery', {
-  name: String,
-  quantity: Number
+// Models
+var Users = mongoose.model('Users', {
+  username: String,
+  password: String,
+  email: String,
+  points: Number
 });
 
-// Get all grocery items
-app.get('/api/groceries', function(req, res) {
-  console.log('Listing groceries items...');
+// Get all users
+app.get('/api/users', function(req, res) {
+  console.log('Listing Users...');
 
   //use mongoose to get all groceries in the database
-  Grocery.find(function(err, groceries) {
+  Users.find(function(err, users) {
     // if there is an error retrieving, send the error. nothing after res.send(err) will execute
     if (err) {
       res.send(err);
     }
 
-    res.json(groceries); // return all groceries in JSON format
+    res.json(users); // return all groceries in JSON format
   });
 });
 
-// Create a grocery Item
-app.post('/api/groceries', function(req, res) {
-  console.log('Creating grocery item...');
+// Create a new user
+app.post('/api/users', function(req, res) {
+  console.log('Creating new user...');
 
-  Grocery.create(
+  Users.create(
     {
-      name: req.body.name,
-      quantity: req.body.quantity,
+      username: req.body.username,
+      password: req.body.password,
+      email: req.body.email,
+      points: 0,
       done: false
     },
-    function(err, grocery) {
+    function(err, users) {
       if (err) {
         res.send(err);
       }
 
       // create and return all the groceries
-      Grocery.find(function(err, groceries) {
+      Users.find(function(err, users) {
         if (err) res.send(err);
-        res.json(groceries);
+        res.json(users);
       });
     }
   );
 });
 
-// Update a grocery Item
-app.put('/api/groceries/:id', function(req, res) {
-  const grocery = {
-    name: req.body.name,
-    quantity: req.body.quantity
+// Update a user
+app.put('/api/users/:id', function(req, res) {
+  const user = {
+    username: req.body.username,
+    password: req.body.password,
+    email: req.body.email,
+    points: req.body.points
   };
-  console.log('Updating item - ', req.params.id);
-  Grocery.update({ _id: req.params.id }, grocery, function(err, raw) {
+  console.log('Updating user - ', req.params.id);
+  Users.update({ _id: req.params.id }, user, function(err, raw) {
     if (err) {
       res.send(err);
     }
@@ -88,21 +94,21 @@ app.put('/api/groceries/:id', function(req, res) {
   });
 });
 
-// Delete a grocery Item
-app.delete('/api/groceries/:id', function(req, res) {
-  Grocery.remove(
+// Delete a user
+app.delete('/api/users/:id', function(req, res) {
+  Users.remove(
     {
       _id: req.params.id
     },
-    function(err, grocery) {
+    function(err, user) {
       if (err) {
-        console.error('Error deleting grocery ', err);
+        console.error('Error deleting user ', err);
       } else {
-        Grocery.find(function(err, groceries) {
+        Users.find(function(err, users) {
           if (err) {
             res.send(err);
           } else {
-            res.json(groceries);
+            res.json(users);
           }
         });
       }

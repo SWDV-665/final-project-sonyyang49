@@ -7,6 +7,8 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./tab5.page.scss']
 })
 export class Tab5Page implements OnInit {
+  user = '';
+
   animal = [
     { question: 'tus nyuj', answer: 'cow' },
     { question: 'tus kheb', answer: 'crocodile' },
