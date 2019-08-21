@@ -1,63 +1,25 @@
-<ion-content>
-  <ion-card class="welcome-card">
-    <img src="/assets/images/home_banner.png" alt="" />
-    <ion-card-header>
-      <ion-card-title>Please Login or Signup for an Account</ion-card-title>
-      <hr />
-    </ion-card-header>
-    <ion-card-content>
-      <p>
-        A space for kids or adults to learn how to speak hmong. If this is your
-        first time using this app, please watch the video below.
-      </p>
-    </ion-card-content>
-  </ion-card>
-  <ion-card class="login-form">
-    <ion-card-title>Existing User Login:</ion-card-title>
-    <hr />
-    <p>Use this form to login if you already have an account.</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-button color="light" (click)="dismissLogin()">Close</ion-button>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <form #form="ngForm" (ngSubmit)="login(form)" method="post">
     <ion-item>
-      <ion-label>Username: </ion-label>
-      <ion-input placeholder="Enter Username"></ion-input>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input ngModel type="email" name="email"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>Password: </ion-label>
-      <ion-input placeholder="Enter Password"></ion-input>
-    </ion-item>
-    <button>Login</button>
-  </ion-card>
-  <ion-card class="login-guest-form">
-    <ion-card-title>Login as a Guest:</ion-card-title>
-    <hr />
-    <p>Login as a guest if you just want to try out our games.</p>
-    <ion-item>
-      <ion-label>Name: </ion-label>
-      <ion-input placeholder="Enter Name"></ion-input>
-    </ion-item>
-    <button>Login</button>
-  </ion-card>
-  <ion-card class="signup-form">
-    <ion-card-title>Signup for an Account:</ion-card-title>
-    <hr />
-    <p>Use this form to signup for an account.</p>
-    <ion-item>
-      <ion-label>Enter Username: </ion-label>
-      <ion-input placeholder="Enter Username"></ion-input>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input ngModel type="password" name="password"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Enter Password: </ion-label>
-      <ion-input placeholder="Enter Password"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Re-Enter Password: </ion-label>
-      <ion-input placeholder="Re-nter Password"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Enter Email: </ion-label>
-      <ion-input placeholder="Enter Email (Optional)"></ion-input>
-    </ion-item>
-    <button>Signup</button>
-  </ion-card>
+    <p text-right>Forgot Password?</p>
+
+    <ion-button type="submit" expand="full" color="primary">Login</ion-button>
+  </form>
+  <p text-center>Don't have a account?</p>
+  <ion-button expand="full" color="danger" (click)="registerModal()">Register</ion-button>
 </ion-content>
