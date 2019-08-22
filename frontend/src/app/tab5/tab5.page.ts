@@ -76,7 +76,7 @@ export class Tab5Page implements OnInit {
     const alert = await this.alertController.create({
       header: 'Correct! Zoo Heev!',
       subHeader: 'You answered correctly. ',
-      message: 'Click Ok to go to the next question.',
+      message: 'Click Ok to go to the next question. ',
       buttons: [
         {
           text: 'Ok',
