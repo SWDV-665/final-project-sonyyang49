@@ -106,46 +106,23 @@ export class Tab5Page implements OnInit {
   }
 
   questionAudio(animal) {
-    this.nativeAudio.preloadSimple(animal, '../../assets/audio/'+ animal + '.m4a').then(
-      function (msg) {
-        console.log(msg);
-      },
-      function (error) {
-        console.log(error);
-      }
-    );
+    this.nativeAudio.preloadSimple(animal, '../../assets/audio/'+ animal + '.m4a');
+    this.nativeAudio.play(animal);
   }
 
   incorrectAudio(){
-    this.nativeAudio.preloadSimple('incorrect', '../../assets/audio/incorrect.m4a').then(
-      function (msg) {
-        console.log(msg);
-      },
-      function (error) {
-        console.log(error);
-      }
-    );
+    this.nativeAudio.preloadSimple('incorrect', '../../assets/audio/incorrect.m4a');
+    this.nativeAudio.play('incorrect');
+
   }
 
   correctAudio(){
-    this.nativeAudio.preloadSimple('correct', '../../assets/audio/correct.m4a').then(
-      function (msg) {
-        console.log(msg);
-      },
-      function (error) {
-        console.log(error);
-      }
-    );
+    this.nativeAudio.preloadSimple('correct', '../../assets/audio/correct.m4a');
+    this.nativeAudio.play('correct');
   }
 
   playMusic(){
-    this.nativeAudio.preloadSimple('music', '../../assets/audio/henesy_music.mp3').then(
-      function (msg) {
-        console.log(msg);
-      },
-      function (error) {
-        console.log(error);
-      }
-    );
+    this.nativeAudio.preloadSimple('music', '../../assets/audio/henesy_music.mp3');
+    this.nativeAudio.play('music');
   }
 }
