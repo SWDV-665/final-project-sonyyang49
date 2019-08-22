@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { NativeAudio } from '@ionic-native/native-audio/ngx';
 
 @Component({
   selector: 'app-tab5',
@@ -38,11 +39,12 @@ export class Tab5Page implements OnInit {
   correctAnswer = '';
   question = '';
 
-  constructor(public alertController: AlertController) {}
+  constructor(public alertController: AlertController, public nativeAudio: NativeAudio) {}
 
   ngOnInit() {
     this.getRandomAnimals();
     this.getRandomQuestion();
+    this.playMusic();
   }
 
   getRandomAnimals() {
@@ -61,6 +63,7 @@ export class Tab5Page implements OnInit {
     let question_index = Math.floor(Math.random() * this.randomAnimal.length);
     this.correctAnswer = this.randomAnimal[question_index].answer;
     this.question = this.randomAnimal[question_index].question;
+    this.questionAudio(this.correctAnswer);
   }
 
   checkAnswer(answer) {
@@ -100,5 +103,49 @@ export class Tab5Page implements OnInit {
     });
 
     await alert.present();
+  }
+
+  questionAudio(animal) {
+    this.nativeAudio.preloadSimple(animal, '../../assets/audio/'+ animal + '.m4a').then(
+      function (msg) {
+        console.log(msg);
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
+  }
+
+  incorrectAudio(){
+    this.nativeAudio.preloadSimple('incorrect', '../../assets/audio/incorrect.m4a').then(
+      function (msg) {
+        console.log(msg);
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
+  }
+
+  correctAudio(){
+    this.nativeAudio.preloadSimple('correct', '../../assets/audio/correct.m4a').then(
+      function (msg) {
+        console.log(msg);
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
+  }
+
+  playMusic(){
+    this.nativeAudio.preloadSimple('music', '../../assets/audio/henesy_music.mp3').then(
+      function (msg) {
+        console.log(msg);
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
   }
 }
