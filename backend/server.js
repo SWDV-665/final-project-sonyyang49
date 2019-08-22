@@ -29,19 +29,17 @@ app.use(function(req, res, next) {
 });
 
 // Models
-var Users = mongoose.model('Users', {
-  username: String,
-  password: String,
-  email: String,
+var Names = mongoose.model('Names', {
+  name: String,
   points: Number
 });
 
 // Get all users
-app.get('/api/users', function(req, res) {
+app.get('/api/names', function(req, res) {
   console.log('Listing Users...');
 
   //use mongoose to get all groceries in the database
-  Users.find(function(err, users) {
+  Names.find(function(err, users) {
     // if there is an error retrieving, send the error. nothing after res.send(err) will execute
     if (err) {
       res.send(err);
@@ -52,10 +50,10 @@ app.get('/api/users', function(req, res) {
 });
 
 // Create a new user
-app.post('/api/users', function(req, res) {
+app.post('/api/names', function(req, res) {
   console.log('Creating new user...');
 
-  Users.create(
+  Names.create(
     {
       username: req.body.username,
       password: req.body.password,
@@ -77,43 +75,19 @@ app.post('/api/users', function(req, res) {
   );
 });
 
-// Update a user
-app.put('/api/users/:id', function(req, res) {
+// Update a user points
+app.put('/api/names/:id', function(req, res) {
   const user = {
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email,
+    name: req.body.username,
     points: req.body.points
   };
   console.log('Updating user - ', req.params.id);
-  Users.update({ _id: req.params.id }, user, function(err, raw) {
+  Names.update({ _id: req.params.id }, user, function(err, raw) {
     if (err) {
       res.send(err);
     }
     res.send(raw);
   });
-});
-
-// Delete a user
-app.delete('/api/users/:id', function(req, res) {
-  Users.remove(
-    {
-      _id: req.params.id
-    },
-    function(err, user) {
-      if (err) {
-        console.error('Error deleting user ', err);
-      } else {
-        Users.find(function(err, users) {
-          if (err) {
-            res.send(err);
-          } else {
-            res.json(users);
-          }
-        });
-      }
-    }
-  );
 });
 
 // Start app and listen on port 8080
