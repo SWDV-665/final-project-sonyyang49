@@ -1,95 +1,45 @@
-// Set up
+
 var express = require('express');
-var app = express();
-var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
+var passport = require('passport');
+var mongoose = require('mongoose');
+var config = require('./config/config');
+var port = process.env.PORT || 5000;
 var cors = require('cors');
 
-// Configuration
-mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost:27017/hmongames',
-  { useNewUrlParser: true }
-);
-
-app.use(bodyParser.urlencoded({ extended: 'true' }));
-app.use(bodyParser.json());
-app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-app.use(methodOverride());
+var app = express();
 app.use(cors());
 
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'DELETE, POST, PUT');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  next();
+// get our request parameters
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Use the passport package in our application
+app.use(passport.initialize());
+var passportMiddleware = require('./middleware/passport');
+passport.use(passportMiddleware);
+
+// Demo Route (GET http://localhost:5000)
+app.get('/', function (req, res) {
+  return res.send('Hello! The API is at http://localhost:' + port + '/api');
 });
 
-// Models
-var Names = mongoose.model('Names', {
-  name: String,
-  points: Number
+var routes = require('./routes');
+app.use('/api', routes);
+
+mongoose.connect(config.db, { useNewUrlParser: true, useCreateIndex: true });
+
+const connection = mongoose.connection;
+
+connection.once('open', () => {
+  console.log('MongoDB database connection established successfully!');
 });
 
-// Get all users
-app.get('/api/names', function(req, res) {
-  console.log('Listing Users...');
-
-  //use mongoose to get all groceries in the database
-  Names.find(function(err, users) {
-    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-    if (err) {
-      res.send(err);
-    }
-
-    res.json(users); // return all groceries in JSON format
-  });
+connection.on('error', (err) => {
+  console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
+  process.exit();
 });
 
-// Create a new user
-app.post('/api/names', function(req, res) {
-  console.log('Creating new user...');
-
-  Names.create(
-    {
-      username: req.body.username,
-      password: req.body.password,
-      email: req.body.email,
-      points: 0,
-      done: false
-    },
-    function(err, users) {
-      if (err) {
-        res.send(err);
-      }
-
-      // create and return all the groceries
-      Users.find(function(err, users) {
-        if (err) res.send(err);
-        res.json(users);
-      });
-    }
-  );
-});
-
-// Update a user points
-app.put('/api/names/:id', function(req, res) {
-  const user = {
-    name: req.body.username,
-    points: req.body.points
-  };
-  console.log('Updating user - ', req.params.id);
-  Names.update({ _id: req.params.id }, user, function(err, raw) {
-    if (err) {
-      res.send(err);
-    }
-    res.send(raw);
-  });
-});
-
-// Start app and listen on port 8080
-app.listen(process.env.PORT || 8080);
-console.log('Grocery server listening on port  - ', process.env.PORT || 8080);
+// Start the server
+app.listen(port);
+console.log('There will be dragons: http://localhost:' + port);

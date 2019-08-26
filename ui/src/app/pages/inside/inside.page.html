@@ -1,0 +1,93 @@
+<ion-card class="welcome-card">
+  <ion-card-header>
+    <p><b>Instructions:</b> Read the question below or play the audio format of the question, then click the corresponding answer.  </p>
+    <ion-card-title class="questions">Which animal is {{ question }}?</ion-card-title>
+    <ion-button (click)="playQuestion()" color="primary">
+      <ion-icon name="play-circle"></ion-icon> Play Audio
+    </ion-button>
+
+  </ion-card-header>
+</ion-card>
+
+
+
+<ion-content>
+
+<ion-grid>
+  <ion-row align-items-center>
+    <ion-col align-self-center>
+      <ion-card>
+        <button (click)="checkAnswer(randomAnimal[0])">
+          <img [src]="picToView(randomAnimal[0])" alt="" />
+        </button>
+      </ion-card>
+    </ion-col>
+    <ion-col align-self-center>
+      <ion-card>
+        <button (click)="checkAnswer(randomAnimal[1])">
+          <img [src]="picToView(randomAnimal[1])" alt="" />
+        </button>
+      </ion-card>
+    </ion-col>
+    <ion-col align-self-center>
+      <ion-card>
+        <button (click)="checkAnswer(randomAnimal[2])">
+          <img [src]="picToView(randomAnimal[2])" alt="" />
+        </button>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row align-items-center>
+    <ion-col align-self-center>
+      <ion-card>
+        <button (click)="checkAnswer(randomAnimal[3])">
+          <img [src]="picToView(randomAnimal[3])" alt="" />
+        </button>
+      </ion-card>
+    </ion-col>
+    <ion-col align-self-center>
+      <ion-card>
+        <button (click)="checkAnswer(randomAnimal[4])">
+          <img [src]="picToView(randomAnimal[4])" alt="" />
+        </button>
+      </ion-card>
+    </ion-col>
+    <ion-col align-self-center>
+      <ion-card>
+        <button (click)="checkAnswer(randomAnimal[5])">
+          <img [src]="picToView(randomAnimal[5])" alt="" />
+        </button>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row align-items-center>
+    <ion-col align-self-center>
+      <ion-card>
+        <button (click)="checkAnswer(randomAnimal[6])">
+          <img [src]="picToView(randomAnimal[6])" alt="" />
+        </button>
+      </ion-card>
+    </ion-col>
+    <ion-col align-self-center>
+      <ion-card>
+        <button (click)="checkAnswer(randomAnimal[7])">
+          <img [src]="picToView(randomAnimal[7])" alt="" />
+        </button>
+      </ion-card>
+    </ion-col>
+    <ion-col align-self-center>
+      <ion-card>
+        <button (click)="checkAnswer(randomAnimal[8])">
+          <img [src]="picToView(randomAnimal[8])" alt="" />
+        </button>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<ion-button expand="full" (click)="logout()">Logout</ion-button>
+</ion-content>
+
+
+

@@ -1,0 +1,30 @@
+<ion-card class="welcome-card">
+  <img src="/assets/images/home_banner.png" alt="" />
+  <ion-card-header>
+    <ion-card-title>Welcome to HMONGAMES</ion-card-title>
+    <hr />
+  </ion-card-header>
+  <ion-card-content>
+    <p>
+      A space for kids or adults to learn how to speak hmong. For now we only have one game, but will continue to add to our database.  
+  </ion-card-content>
+</ion-card>
+
+<ion-content padding>
+  <form [formGroup]="credentialsForm" (ngSubmit)="onSubmit()">
+    <h2>Please Login or Register for a new account. </h2>
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" [disabled]="!credentialsForm.valid">Login</ion-button>
+    <ion-button expand="full" type="button" (click)="register()" [disabled]="!credentialsForm.valid">Register</ion-button>
+
+  </form>
+</ion-content>
